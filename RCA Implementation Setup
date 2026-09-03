@@ -1,0 +1,47 @@
+
+## Full RCA Automated Implementation
+
+### What does this Repo contain?
+
+This repository is a **command-driven implementation guide for Salesforce Revenue Cloud Advanced (RCA)** — not just documentation, but a structured set of instructions, scripts, and metadata packages that let a user (or Claude, via Claude Code) set up RCA in a new org module by module, using real commands rather than manual guesswork.
+
+Every step in this repo is sourced from an actual implementation — pulled directly from our [[Confluence implementation tracker](https://bluvium.atlassian.net/wiki/spaces/Dashboard/pages/3009609730/RCA+Implementation+in+new+Org)](https://bluvium.atlassian.net/wiki/spaces/Dashboard/pages/3009609730/RCA+Implementation+in+new+Org) and its linked Asana tickets. Nothing here is generic best-practice filler; each module includes the confirmed steps, the real bugs hit during the original build (with fixes), and a validation checklist.
+
+### What a user can do with this repo
+
+Open this repo in Claude Code (VS Code) and either:
+- say **"RCA setup & permissions"** (or "set up RCA in a new org"), or
+- run **`/rca-setup`**
+
+Each module should be setup in the order given for things to work.Each module can be given command accordingly as mentioned for **Module 1** as example, and Claude Code will work through the modules in order — asking setup/data-source questions where needed, running Salesforce CLI commands (`sf project deploy start`, `sf org assign permset`, etc.) for anything that's genuinely automatable, and walking through manual Setup steps precisely where no API exists — always confirming before anything writes to the org.
+
+### Modules covered (8, fully built)
+
+| Module | Contents |
+|---|---|
+| 1. RCA Setup and Permissions | 18 Revenue Cloud settings (15 automatable), 51 permission sets across 6 personas, context definition clone, custom app |
+| 2. Product Setup | Categories, standalone products, bundles, attributes, derived pricing, usage-based products, quantity dependency |
+| 3. Pricing Setup | Bundle pricing, attribute-based pricing, volume discounts, partner discounts |
+| 4. Quote Management | Quote creation, dates, sync, partner/address population, discount & payment-term approvals |
+| 5. Order Management | Order generation from Opportunity, address carry-through, DRO (Dynamic Revenue Orchestrator) |
+| 6. CLM | Contract button/approval/DocuSign/clauses, source opportunity field, template auto-population |
+| 7. Asset | Asset generation on Order activation |
+| 8. Amendment and Renewals | Amendment flow, As-Is Renewals, standard renewal flow, renewal forecast opportunity, renewal quote button |
+
+### What's automated vs. manual
+
+Not everything can be scripted — this repo is explicit about the difference rather than pretending otherwise:
+- **Genuinely automatable**: deployed via a real Salesforce Metadata API package (`modules/01-rca-setup-and-permissions/scripts/revenue-settings/`) and CLI-driven permission set assignment.
+- **Manual by necessity**: Release Updates (no API exists), CML rule authoring, Flow-building steps — these are documented as precise click-paths, not skipped.
+
+### Status
+
+All 8 modules from the current Confluence page are built. Remaining modules per Asana's `Module` field (Taxation, CRM Setup, Partner Portal, API, Data Migration) are tracked in `ROADMAP.md` and will be added the same way — pulled from source tickets, not invented.
+
+### Reference org
+
+Configuration values and example data throughout this repo are sourced from the **RCA POC org**. If your target reference org differs, the settings package and example data may need updated values (see `CLAUDE.md` and `docs/00-prerequisites.md`).
+
+__**RCA setup repositry - Download this file & open this in your VS code to start working**.__
+
+[rca-implementation-guide-vscode-ready_1.zip](https://github.com/user-attachments/files/31643782/rca-implementation-guide-vscode-ready_1.zip)
